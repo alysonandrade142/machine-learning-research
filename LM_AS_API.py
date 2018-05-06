@@ -24,11 +24,8 @@ reg.fit(X_train, y_train)
 def predict():
     json_ = request.get_json()
     query_df = pd.DataFrame(json_)
-    print(query_df)
-    value = query_df[['alcohol-use']]
-    y = pd.factorize(query_df['alcohol-frequency'].values)[0].reshape(-1, 1)
-    prediction = reg.predict(value)
-    prediction
+    model = joblib.load('model.pkl')
+    prediction = model.predict(value)
     return jsonify({'prediction': list(prediction[0])})
 
 if __name__ == '__main__':
